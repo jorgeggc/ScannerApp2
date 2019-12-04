@@ -167,6 +167,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\ScannerLog.cshtml" />
     <Content Include="Views\Home\EmployeeList.cshtml" />
+    <Content Include="Views\Home\LocationSelection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

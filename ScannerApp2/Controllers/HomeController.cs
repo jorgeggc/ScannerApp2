@@ -19,6 +19,12 @@ namespace ScannerApp2.Controllers
 
             return View();
         }
+        public ActionResult LocationSelection()
+        {
+            ViewBag.Message = "A selection of your current location.";
+
+            return View();
+        }
         public ActionResult EmployeeList()
         {
             ViewBag.Message = "View a list of Employee's.";

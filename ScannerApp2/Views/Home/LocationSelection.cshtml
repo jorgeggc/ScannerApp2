@@ -1,0 +1,34 @@
+﻿@model ScannerApp2.Models.LocationModel
+
+@{
+    ViewBag.Title = "LocationSelection";
+}
+
+<h2>LocationSelection</h2>
+
+<div>
+    <h4>LocationModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AccessLocationID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccessLocationID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationDesc)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,6 @@
+﻿ALTER ROLE [db_owner] ADD MEMBER [AUSB1\AUSBU1];
+
+
+GO
+ALTER ROLE [db_owner] ADD MEMBER [AUSB1\AUSBU2];
+
