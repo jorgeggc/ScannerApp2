@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DataLibrary;
+using DataLibrary.Models;
+using static DataLibrary.BusinessLogic.ScannerProcessor;
 
 namespace ScannerApp2.Controllers
 {
@@ -29,6 +31,19 @@ namespace ScannerApp2.Controllers
         {
             ViewBag.Message = "View a list of Employee's.";
 
+            var data = LoadEmployees();
+            List<EmployeeModel> employees = new List<EmployeeModel>();
+
+            foreach (var row in data)
+            {
+                employees.Add(new EmployeeModel
+                {
+                    IdentifictionCardID = row.IdentifictionCardID,
+                    Name = row.Name,
+                    CourtAccessRequired = row.CourtAccessRequired,
+                    IDCardNumber = row.IDCardNumber
+                });
+            }
             return View();
         }
         public ActionResult About()
