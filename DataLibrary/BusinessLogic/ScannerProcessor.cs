@@ -24,7 +24,7 @@ namespace DataLibrary.BusinessLogic
 
             };
 
-            string sql = @"insert into dbo.AccessLogs (AccessLocationID, StationID, AccessDate, IDCardNumber, DeclineReason) values(@AccessLocationID, @StationID, @AccessDate, @IDCardNumber, @DeclineReason);";
+            string sql = @"insert into dbo.AccessLogs (AccessLocationID, StationID, AccessDate, IDCardNumber, DeclineReason) values (@AccessLocationID, @StationID, @AccessDate, @IDCardNumber, @DeclineReason);";
 
             return SqlDataAccess.SaveData(sql, data);
         }
@@ -38,9 +38,7 @@ namespace DataLibrary.BusinessLogic
         }
         public static List<EmployeeModel> LoadEmployees()
         {
-            string sql = @"select IdentificationCardID, Name, OrgStructure, PhoneNumber, 
-                        EmailAddress, HireDate, CardExpireDate, TerminationDate, WorkerTypeID, 
-                        Company, CourtAccessRequired, IDCardNumber from dbo.IdentificationCards;";
+            string sql = @"select IdentificationCardID, Name, CourtAccessRequired, IDCardNumber from dbo.IdentificationCards;";
 
             return SqlDataAccess.LoadData<EmployeeModel>(sql);
         }

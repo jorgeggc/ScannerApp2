@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ScannerApp2.Models;
 using DataLibrary;
 using DataLibrary.Models;
 using static DataLibrary.BusinessLogic.ScannerProcessor;
@@ -19,6 +20,22 @@ namespace ScannerApp2.Controllers
         {
             ViewBag.Message = "View a list of Scanned ID's.";
 
+            var data = LoadScannerLog();
+            List<DataLibrary.Models.ScannerLogModel> accessLog = new List<DataLibrary.Models.ScannerLogModel>();
+
+            foreach (var row in data)
+            {
+                accessLog.Add(new DataLibrary.Models.ScannerLogModel
+                {
+                    AccessLogID = row.AccessLogID,
+                    AccessLocationID = row.AccessLocationID,
+                    StationID = row.StationID,
+                    AccessDate = row.AccessDate,
+                    IDCardNumber = row.IDCardNumber,
+                    DeclineReason = row.DeclineReason
+                });
+            }
+
             return View();
         }
         public ActionResult LocationSelection()
@@ -26,17 +43,18 @@ namespace ScannerApp2.Controllers
             ViewBag.Message = "A selection of your current location.";
 
             return View();
-        }
+        }     
         public ActionResult EmployeeList()
         {
             ViewBag.Message = "View a list of Employee's.";
 
             var data = LoadEmployees();
-            List<EmployeeModel> employees = new List<EmployeeModel>();
+
+            List<Models.EmployeeModel> employees = new List<Models.EmployeeModel>();
 
             foreach (var row in data)
             {
-                employees.Add(new EmployeeModel
+                employees.Add(new Models.EmployeeModel
                 {
                     IdentifictionCardID = row.IdentifictionCardID,
                     Name = row.Name,
@@ -44,20 +62,7 @@ namespace ScannerApp2.Controllers
                     IDCardNumber = row.IDCardNumber
                 });
             }
-            return View();
-        }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(employees);
         }
     }
 }
