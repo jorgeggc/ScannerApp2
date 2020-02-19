@@ -6,59 +6,52 @@
 
 <h2>ScannerLog</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.AccessLogID)
-        
-        <tb>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.AccessLocationID)
-        </tb>
-        <tb>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.StationID)
-        </tb>
-        <tb>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.AccessDate)
-        </tb>
-        <tb>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.IDCardNumber)
-        </tb>
-        <tb>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.DeclineReason)
-        </tb>
-            </th>
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccessLogID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccessLocationID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StationID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccessDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IDCardNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeclineReason)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessLogID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessLocationID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StationID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDCardNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeclineReason)
+            </td>
+        </tr>
+    }
 
 </table>

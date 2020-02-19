@@ -1,4 +1,4 @@
-﻿@model ScannerApp2.Models.LocationModel
+﻿@model IEnumerable<ScannerApp2.Models.LocationModel>
 
 @{
     ViewBag.Title = "LocationSelection";
@@ -6,29 +6,26 @@
 
 <h2>LocationSelection</h2>
 
-<div>
-    <h4>LocationModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
+<table class="table">
+    <tr>
+        <th>
             @Html.DisplayNameFor(model => model.AccessLocationID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AccessLocationID)
-        </dd>
-
-        <dt>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.LocationDesc)
-        </dt>
+        </th>
+        <th></th>
+    </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.LocationDesc)
-        </dd>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccessLocationID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationDesc)
+        </td>
+    </tr>
+}
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</table>

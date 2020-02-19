@@ -21,11 +21,11 @@ namespace ScannerApp2.Controllers
             ViewBag.Message = "View a list of Scanned ID's.";
 
             var data = LoadScannerLog();
-            List<DataLibrary.Models.ScannerLogModel> accessLog = new List<DataLibrary.Models.ScannerLogModel>();
+            List<Models.ScannerLogModel> accessLog = new List<Models.ScannerLogModel>();
 
             foreach (var row in data)
             {
-                accessLog.Add(new DataLibrary.Models.ScannerLogModel
+                accessLog.Add(new Models.ScannerLogModel
                 {
                     AccessLogID = row.AccessLogID,
                     AccessLocationID = row.AccessLocationID,
@@ -36,13 +36,25 @@ namespace ScannerApp2.Controllers
                 });
             }
 
-            return View();
+            return View(accessLog);
         }
         public ActionResult LocationSelection()
         {
             ViewBag.Message = "A selection of your current location.";
 
-            return View();
+            var data = LoadLocation();
+
+            List<Models.LocationModel> location = new List<Models.LocationModel>();
+
+            foreach (var row in data)
+            {
+                location.Add(new Models.LocationModel
+                {
+                    LocationDesc = row.LocationDesc
+                });
+            }
+
+            return View(location);
         }     
         public ActionResult EmployeeList()
         {
@@ -56,7 +68,6 @@ namespace ScannerApp2.Controllers
             {
                 employees.Add(new Models.EmployeeModel
                 {
-                    IdentifictionCardID = row.IdentifictionCardID,
                     Name = row.Name,
                     CourtAccessRequired = row.CourtAccessRequired,
                     IDCardNumber = row.IDCardNumber

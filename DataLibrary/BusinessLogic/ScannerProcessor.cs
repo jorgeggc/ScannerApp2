@@ -42,5 +42,11 @@ namespace DataLibrary.BusinessLogic
 
             return SqlDataAccess.LoadData<EmployeeModel>(sql);
         }
+        public static List<LocationModel> LoadLocation()
+        {
+            string sql = @"select AccessLocationID, LocationDesc from dbo.AccessLocations;";
+
+            return SqlDataAccess.LoadData<LocationModel>(sql);
+        }
     }
 }
