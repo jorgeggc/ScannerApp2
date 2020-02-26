@@ -24,27 +24,26 @@ namespace DataLibrary.BusinessLogic
 
             };
 
-            string sql = @"insert into dbo.AccessLogs (AccessLocationID, StationID, AccessDate, IDCardNumber, DeclineReason) values (@AccessLocationID, @StationID, @AccessDate, @IDCardNumber, @DeclineReason);";
+            string sql = @"dbo.Insert_Accesslog";
 
             return SqlDataAccess.SaveData(sql, data);
         }
 
         public static List<ScannerLogModel> LoadScannerLog()
         {
-            string sql = @"select AccessLogID, AccessLocationID, StationID, AccessDate, IDCardNumber, 
-                            DeclineReason from dbo.AccessLogs;";
+            string sql = @"dbo.Load_ScannerLog";
 
             return SqlDataAccess.LoadData<ScannerLogModel>(sql);
         }
         public static List<EmployeeModel> LoadEmployees()
         {
-            string sql = @"select IdentificationCardID, Name, CourtAccessRequired, IDCardNumber from dbo.IdentificationCards;";
+            string sql = @"dbo.Load_Employees";
 
             return SqlDataAccess.LoadData<EmployeeModel>(sql);
         }
         public static List<LocationModel> LoadLocation()
         {
-            string sql = @"select AccessLocationID, LocationDesc from dbo.AccessLocations;";
+            string sql = @"dbo.Load_Location";
 
             return SqlDataAccess.LoadData<LocationModel>(sql);
         }
