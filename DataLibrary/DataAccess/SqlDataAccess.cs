@@ -26,12 +26,14 @@ namespace DataLibrary.DataAccess
             }
         }
 
-        public static int SaveData<T>(string sql, T data)
+        public static int SaveData<T>(SqlCommand com, T data)
         {
-            using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
+            return com.ExecuteNonQuery();
+            //return cnn.Execute(com, data);
+            /**using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
             {
-                return cnn.Execute(sql, data);
-            }
+                return cnn.Execute(com, data);
+            }**/
         }
     }
 }
