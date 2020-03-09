@@ -16,9 +16,27 @@ namespace ScannerApp2.Controllers
         {
             return View();
         }
+        
+        [HttpPost]
+        public ActionResult Index(Models.ScannerLogModel model)
+        {
+            ViewBag.Message = "Insert Scanned ID's to DB.";
+
+            if (ModelState.IsValid)
+            {
+                int recordCreated = CreateScannerLog(model.AccessLocationID,
+                    model.StationID,
+                    model.AccessDate,
+                    model.IDCardNumber,
+                    model.DeclineReason);
+                return RedirectToAction("IndexData");
+            }
+
+            return View();
+        }
         public ActionResult ScannerLog()
         {
-            ViewBag.Message = "View a list of Scanned ID's.";
+            ViewBag.Message = "View a list of Scanned Logs.";
 
             var data = LoadScannerLog();
             List<Models.ScannerLogModel> accessLog = new List<Models.ScannerLogModel>();
@@ -38,6 +56,8 @@ namespace ScannerApp2.Controllers
 
             return View(accessLog);
         }
+        
+        
         public ActionResult LocationSelection()
         {
             ViewBag.Message = "A selection of your current location.";
