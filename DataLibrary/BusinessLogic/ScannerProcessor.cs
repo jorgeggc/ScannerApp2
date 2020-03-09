@@ -24,7 +24,9 @@ namespace DataLibrary.BusinessLogic
 
             };
 
+
             string sql = @"[dbo].[Insert_Accesslog] @AccessLocationID = 2, @StationID = CSC, @IDCardNumber = 99991,	@DeclineReason = Good, @OperatorLogin = 123 ";
+
 
             return SqlDataAccess.SaveData(sql, data);
         }
@@ -32,19 +34,20 @@ namespace DataLibrary.BusinessLogic
 
         public static List<ScannerLogModel> LoadScannerLog()
         {
-            string sql = @"dbo.Load_ScannerLog";
+            string sql = @"select AccessLogID, AccessLocationID, StationID, AccessDate, IDCardNumber, 
+                            DeclineReason from dbo.AccessLogs;";
 
             return SqlDataAccess.LoadData<ScannerLogModel>(sql);
         }
         public static List<EmployeeModel> LoadEmployees()
         {
-            string sql = @"dbo.Load_Employees";
+            string sql = @"select IdentificationCardID, Name, CourtAccessRequired, IDCardNumber from dbo.IdentificationCards;";
 
             return SqlDataAccess.LoadData<EmployeeModel>(sql);
         }
         public static List<LocationModel> LoadLocation()
         {
-            string sql = @"dbo.Load_Location";
+            string sql = @"select AccessLocationID, LocationDesc from dbo.AccessLocations;";
 
             return SqlDataAccess.LoadData<LocationModel>(sql);
         }
