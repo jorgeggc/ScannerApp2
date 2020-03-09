@@ -29,7 +29,7 @@ namespace ScannerApp2.Controllers
                     model.AccessDate,
                     model.IDCardNumber,
                     model.DeclineReason);
-                return RedirectToAction("IndexData");
+                return RedirectToAction("Index");
             }
 
             return View();
