@@ -25,7 +25,7 @@ namespace DataLibrary.BusinessLogic
             };
 
 
-            string sql = @"[dbo].[Insert_Accesslog] @AccessLocationID = 2, @StationID = CSC, @IDCardNumber = 99991,	@DeclineReason = Good, @OperatorLogin = 123 ";
+            string sql = @"[dbo].[Insert_Accesslog] @AccessLocationID = 2, @StationID = CSC, @IDCardNumber = 99991,	@DeclineReason = Good, @OperatorLogin = 1";
 
 
             return SqlDataAccess.SaveData(sql, data);
