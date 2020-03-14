@@ -2,6 +2,9 @@
 using DataLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,13 +28,28 @@ namespace DataLibrary.BusinessLogic
             };
 
 
-            string sql = @"[dbo].[Insert_Accesslog] @AccessLocationID = 2, @StationID = CSC, @IDCardNumber = 99991,	@DeclineReason = Good, @OperatorLogin = 1";
+            //string sql = @"[dbo].[Insert_Accesslog] @AccessLocationID = 2, @StationID = CSC, @IDCardNumber = 99991,	@DeclineReason = Good, @OperatorLogin = 1";
 
+            string strConnString = ConfigurationManager.ConnectionStrings["BuildingAccess"].ConnectionString;
+            SqlCommand sql ;
+
+            SqlConnection con = new SqlConnection(strConnString);
+            con.Open();
+            sql = new SqlCommand("Insert_Accesslog", con);
+            sql.CommandType = CommandType.StoredProcedure;
+            sql.Parameters.AddWithValue("@AccessLocationID", 1);
+            sql.Parameters.AddWithValue("@StationID", "CSC");
+            sql.Parameters.AddWithValue("@IDCardNumber", 99991);
+            sql.Parameters.AddWithValue("@DeclineReason", Pass());
+            sql.Parameters.AddWithValue("@OperatorLogin", 1);
 
             return SqlDataAccess.SaveData(sql, data);
         }
        
-
+        public static string Pass()
+        {
+            return "good method";
+        }
         public static List<ScannerLogModel> LoadScannerLog()
         {
             string sql = @"select AccessLogID, AccessLocationID, StationID, AccessDate, IDCardNumber, 
