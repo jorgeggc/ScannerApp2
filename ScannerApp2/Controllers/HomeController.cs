@@ -16,6 +16,15 @@ namespace ScannerApp2.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Index(DataLibrary.Models.EmployeeModel employee)
+        {
+            int iDCardNumber = employee.IDCardNumber;
+
+            return View();
+        }
+
         public ActionResult ScannerLog()
         {
             ViewBag.Message = "View a list of Scanned ID's.";
@@ -74,6 +83,27 @@ namespace ScannerApp2.Controllers
                 });
             }
             return View(employees);
+        }
+        [HttpPost] public ActionResult GetEmployee(int idCardNumber)
+        {
+            ViewBag.Message = "View the Employee's data.";
+
+            String IDNumber = idCardNumber.ToString();
+
+            var data = LoadEmployees();
+
+            List<Models.EmployeeModel> employee = new List<Models.EmployeeModel>();
+
+            foreach (var row in data)
+            {
+                if (data.ToString().Contains(IDNumber)) {
+                    employee.Add(new Models.EmployeeModel
+                    {
+                        Name = row.Name
+                    });
+                }
+            }
+            return View(employee);
         }
     }
 }
