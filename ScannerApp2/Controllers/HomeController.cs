@@ -16,18 +16,27 @@ namespace ScannerApp2.Controllers
         {
             return View();
         }
-
+        
         [HttpPost]
-        public ActionResult Index(DataLibrary.Models.EmployeeModel employee)
+        public ActionResult Index(Models.ScannerLogModel model)
         {
-            int iDCardNumber = employee.IDCardNumber;
+            ViewBag.Message = "Insert Scanned ID's to DB.";
+
+            if (ModelState.IsValid)
+            {
+                int recordCreated = CreateScannerLog(model.AccessLocationID,
+                    model.StationID,
+                    model.AccessDate,
+                    model.IDCardNumber,
+                    model.DeclineReason);
+                return RedirectToAction("Index");
+            }
 
             return View();
         }
-
         public ActionResult ScannerLog()
         {
-            ViewBag.Message = "View a list of Scanned ID's.";
+            ViewBag.Message = "View a list of Scanned Logs.";
 
             var data = LoadScannerLog();
             List<Models.ScannerLogModel> accessLog = new List<Models.ScannerLogModel>();
@@ -47,6 +56,8 @@ namespace ScannerApp2.Controllers
 
             return View(accessLog);
         }
+        
+        
         public ActionResult LocationSelection()
         {
             ViewBag.Message = "A selection of your current location.";
@@ -83,27 +94,6 @@ namespace ScannerApp2.Controllers
                 });
             }
             return View(employees);
-        }
-        [HttpPost] public ActionResult GetEmployee(int idCardNumber)
-        {
-            ViewBag.Message = "View the Employee's data.";
-
-            String IDNumber = idCardNumber.ToString();
-
-            var data = LoadEmployees();
-
-            List<Models.EmployeeModel> employee = new List<Models.EmployeeModel>();
-
-            foreach (var row in data)
-            {
-                if (data.ToString().Contains(IDNumber)) {
-                    employee.Add(new Models.EmployeeModel
-                    {
-                        Name = row.Name
-                    });
-                }
-            }
-            return View(employee);
         }
     }
 }
