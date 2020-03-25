@@ -27,28 +27,68 @@ namespace DataLibrary.BusinessLogic
 
             };
 
-
-            //string sql = @"[dbo].[Insert_Accesslog] @AccessLocationID = 2, @StationID = CSC, @IDCardNumber = 99991,	@DeclineReason = Good, @OperatorLogin = 1";
-
             string strConnString = ConfigurationManager.ConnectionStrings["BuildingAccess"].ConnectionString;
-            SqlCommand sql ;
-
             SqlConnection con = new SqlConnection(strConnString);
+
+
             con.Open();
-            sql = new SqlCommand("Insert_Accesslog", con);
+            SqlCommand id = new SqlCommand("Select_Information", con);
+            id.CommandType = CommandType.StoredProcedure;
+            id.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
+            SqlParameter outID = new SqlParameter("@ReturnValue", SqlDbType.Int, 1) { Direction = ParameterDirection.Output };
+            id.Parameters.Add(outID);
+            SqlParameter parameterReturnAccess = new SqlParameter("@ReturnAccess", SqlDbType.Bit, 10) { Direction = ParameterDirection.Output };
+            parameterReturnAccess.Direction = ParameterDirection.ReturnValue;
+            id.Parameters.Add(parameterReturnAccess);
+            //id.Parameters.Add(outAccess);
+            id.ExecuteNonQuery();
+            
+            int ID;
+            string access;
+            ID = (int)outID.Value;
+            access = id.Parameters["ReturnAccess"].Value.ToString();
+            /**id.CommandType = CommandType.StoredProcedure;
+            id.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
+            SqlParameter returnParameter = id.Parameters.Add("RetVal", SqlDbType.Int);
+            returnParameter.Direction = ParameterDirection.ReturnValue;
+            con.Open();
+            id.ExecuteNonQuery();
+            int returnID = (int)returnParameter.Value;**/
+
+            SqlCommand sql = new SqlCommand("Insert_Accesslog", con);
             sql.CommandType = CommandType.StoredProcedure;
             sql.Parameters.AddWithValue("@AccessLocationID", 1);
-            sql.Parameters.AddWithValue("@StationID", "CSC");
-            sql.Parameters.AddWithValue("@IDCardNumber", 99991);
-            sql.Parameters.AddWithValue("@DeclineReason", Pass());
+            sql.Parameters.AddWithValue("@StationID", access);
+            sql.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
+            sql.Parameters.AddWithValue("@DeclineReason", Pass(ID, access));
             sql.Parameters.AddWithValue("@OperatorLogin", 1);
 
             return SqlDataAccess.SaveData(sql, data);
+
+            
         }
-       
-        public static string Pass()
+            
+        public static string Pass(int num, string access)
         {
-            return "good method";
+            if (num == 1)
+            { 
+                if(access == "1")
+                {
+                    return "good ID";
+                }
+                else{
+                    return "bad ID";
+                }
+            }else if (num == 0)
+            {
+                return "ID DNE";
+            }
+            else
+            {
+                return "broken";
+            }
+
+        
         }
         public static List<ScannerLogModel> LoadScannerLog()
         {
