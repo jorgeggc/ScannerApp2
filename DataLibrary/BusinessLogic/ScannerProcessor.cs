@@ -35,57 +35,70 @@ namespace DataLibrary.BusinessLogic
             SqlCommand id = new SqlCommand("Select_Information", con);
             id.CommandType = CommandType.StoredProcedure;
             id.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
-            SqlParameter outID = new SqlParameter("@ReturnValue", SqlDbType.Int, 1) { Direction = ParameterDirection.Output };
+            SqlParameter outID = new SqlParameter("@ReturnValue", SqlDbType.Int) { Direction = ParameterDirection.Output };
             id.Parameters.Add(outID);
-            SqlParameter parameterReturnAccess = new SqlParameter("@ReturnAccess", SqlDbType.Bit, 10) { Direction = ParameterDirection.Output };
-            parameterReturnAccess.Direction = ParameterDirection.ReturnValue;
-            id.Parameters.Add(parameterReturnAccess);
-            //id.Parameters.Add(outAccess);
+            SqlParameter outAccess = new SqlParameter("@ReturnAccess", SqlDbType.Bit) { Direction = ParameterDirection.Output };
+            id.Parameters.Add(outAccess);
+            SqlParameter outExpiration = new SqlParameter("@ReturnExpiration", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
+            id.Parameters.Add(outExpiration);
+            SqlParameter outTermination = new SqlParameter("@ReturnTermination", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
+            id.Parameters.Add(outTermination);
             id.ExecuteNonQuery();
             
             int ID;
             string access;
+            DateTime Expiration;
+            DateTime Termination;
+            Expiration = (DateTime)outExpiration.Value;
+            Termination = (DateTime)outTermination.Value;
             ID = (int)outID.Value;
-            access = id.Parameters["ReturnAccess"].Value.ToString();
-            /**id.CommandType = CommandType.StoredProcedure;
-            id.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
-            SqlParameter returnParameter = id.Parameters.Add("RetVal", SqlDbType.Int);
-            returnParameter.Direction = ParameterDirection.ReturnValue;
-            con.Open();
-            id.ExecuteNonQuery();
-            int returnID = (int)returnParameter.Value;**/
+            access = outAccess.Value.ToString();
 
             SqlCommand sql = new SqlCommand("Insert_Accesslog", con);
             sql.CommandType = CommandType.StoredProcedure;
             sql.Parameters.AddWithValue("@AccessLocationID", 1);
-            sql.Parameters.AddWithValue("@StationID", access);
+            sql.Parameters.AddWithValue("@StationID", "CSC");
             sql.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
-            sql.Parameters.AddWithValue("@DeclineReason", Pass(ID, access));
+            sql.Parameters.AddWithValue("@DeclineReason", Pass(ID, access, Expiration, Termination));
             sql.Parameters.AddWithValue("@OperatorLogin", 1);
 
             return SqlDataAccess.SaveData(sql, data);
-
-            
         }
             
-        public static string Pass(int num, string access)
+        public static string Pass(int num, string access, DateTime exp, DateTime term)
         {
+            DateTime currentDate = DateTime.Now;
+            int CheckExperiationDate = DateTime.Compare(exp, currentDate);
+            int CheckTerminationDate = DateTime.Compare(term, currentDate);
             if (num == 1)
             { 
-                if(access == "1")
+                if(access == "True")
                 {
-                    return "good ID";
+                    if(CheckExperiationDate > 0)
+                    {
+                        if (CheckTerminationDate < 0)
+                        {
+                            return "Terminated";
+                        }
+                        else
+                        {
+                            return "Passed All";
+                        }
+                    }
+                    else{
+
+                        return "ID Expired";
+                        
+                    }
                 }
+
                 else{
-                    return "bad ID";
+                    return "Access Denied";
                 }
-            }else if (num == 0)
-            {
-                return "ID DNE";
             }
-            else
-            {
-                return "broken";
+
+            else{
+                return "ID DNE";
             }
 
         
