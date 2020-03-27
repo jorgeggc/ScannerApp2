@@ -16,7 +16,7 @@ namespace ScannerApp2.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult Index(Models.ScannerLogModel model)
         {
@@ -56,8 +56,8 @@ namespace ScannerApp2.Controllers
 
             return View(accessLog);
         }
-        
-        
+
+
         public ActionResult LocationSelection()
         {
             ViewBag.Message = "A selection of your current location.";
@@ -75,7 +75,7 @@ namespace ScannerApp2.Controllers
             }
 
             return View(location);
-        }     
+        }
         public ActionResult EmployeeList()
         {
             ViewBag.Message = "View a list of Employee's.";

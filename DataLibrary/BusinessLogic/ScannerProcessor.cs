@@ -39,7 +39,7 @@ namespace DataLibrary.BusinessLogic
             sql.CommandType = CommandType.StoredProcedure;
             sql.Parameters.AddWithValue("@AccessLocationID", 1);
             sql.Parameters.AddWithValue("@StationID", "CSC");
-            sql.Parameters.AddWithValue("@IDCardNumber", 99991);
+            sql.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
             sql.Parameters.AddWithValue("@DeclineReason", Pass());
             sql.Parameters.AddWithValue("@OperatorLogin", 1);
 
