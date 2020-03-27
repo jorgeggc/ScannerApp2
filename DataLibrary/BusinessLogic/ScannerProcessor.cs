@@ -27,28 +27,81 @@ namespace DataLibrary.BusinessLogic
 
             };
 
-
-            //string sql = @"[dbo].[Insert_Accesslog] @AccessLocationID = 2, @StationID = CSC, @IDCardNumber = 99991,	@DeclineReason = Good, @OperatorLogin = 1";
-
             string strConnString = ConfigurationManager.ConnectionStrings["BuildingAccess"].ConnectionString;
-            SqlCommand sql ;
-
             SqlConnection con = new SqlConnection(strConnString);
+
+
             con.Open();
-            sql = new SqlCommand("Insert_Accesslog", con);
+            SqlCommand id = new SqlCommand("Select_Information", con);
+            id.CommandType = CommandType.StoredProcedure;
+            id.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
+            SqlParameter outID = new SqlParameter("@ReturnValue", SqlDbType.Int) { Direction = ParameterDirection.Output };
+            id.Parameters.Add(outID);
+            SqlParameter outAccess = new SqlParameter("@ReturnAccess", SqlDbType.Bit) { Direction = ParameterDirection.Output };
+            id.Parameters.Add(outAccess);
+            SqlParameter outExpiration = new SqlParameter("@ReturnExpiration", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
+            id.Parameters.Add(outExpiration);
+            SqlParameter outTermination = new SqlParameter("@ReturnTermination", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
+            id.Parameters.Add(outTermination);
+            id.ExecuteNonQuery();
+            
+            int ID;
+            string access;
+            DateTime Expiration;
+            DateTime Termination;
+            Expiration = (DateTime)outExpiration.Value;
+            Termination = (DateTime)outTermination.Value;
+            ID = (int)outID.Value;
+            access = outAccess.Value.ToString();
+
+            SqlCommand sql = new SqlCommand("Insert_Accesslog", con);
             sql.CommandType = CommandType.StoredProcedure;
             sql.Parameters.AddWithValue("@AccessLocationID", 1);
             sql.Parameters.AddWithValue("@StationID", "CSC");
             sql.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
-            sql.Parameters.AddWithValue("@DeclineReason", Pass());
+            sql.Parameters.AddWithValue("@DeclineReason", Pass(ID, access, Expiration, Termination));
             sql.Parameters.AddWithValue("@OperatorLogin", 1);
 
             return SqlDataAccess.SaveData(sql, data);
         }
-       
-        public static string Pass()
+            
+        public static string Pass(int num, string access, DateTime exp, DateTime term)
         {
-            return "good method";
+            DateTime currentDate = DateTime.Now;
+            int CheckExperiationDate = DateTime.Compare(exp, currentDate);
+            int CheckTerminationDate = DateTime.Compare(term, currentDate);
+            if (num == 1)
+            { 
+                if(access == "True")
+                {
+                    if(CheckExperiationDate > 0)
+                    {
+                        if (CheckTerminationDate < 0)
+                        {
+                            return "Terminated";
+                        }
+                        else
+                        {
+                            return "Passed All";
+                        }
+                    }
+                    else{
+
+                        return "ID Expired";
+                        
+                    }
+                }
+
+                else{
+                    return "Access Denied";
+                }
+            }
+
+            else{
+                return "ID DNE";
+            }
+
+        
         }
         public static List<ScannerLogModel> LoadScannerLog()
         {

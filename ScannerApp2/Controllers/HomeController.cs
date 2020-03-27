@@ -10,13 +10,14 @@ using static DataLibrary.BusinessLogic.ScannerProcessor;
 
 namespace ScannerApp2.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
             return View();
         }
-
+        
         [HttpPost]
         public ActionResult Index(Models.ScannerLogModel model)
         {
@@ -34,6 +35,8 @@ namespace ScannerApp2.Controllers
 
             return View();
         }
+        [Authorize]
+        
         public ActionResult ScannerLog()
         {
             ViewBag.Message = "View a list of Scanned Logs.";
@@ -57,7 +60,7 @@ namespace ScannerApp2.Controllers
             return View(accessLog);
         }
 
-
+        [Authorize]
         public ActionResult LocationSelection()
         {
             ViewBag.Message = "A selection of your current location.";
@@ -76,6 +79,8 @@ namespace ScannerApp2.Controllers
 
             return View(location);
         }
+        [Authorize]
+        
         public ActionResult EmployeeList()
         {
             ViewBag.Message = "View a list of Employee's.";

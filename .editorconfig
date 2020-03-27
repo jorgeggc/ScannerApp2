@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# RCS1006: Merge else clause with nested if statement.
+dotnet_diagnostic.RCS1006.severity = none
