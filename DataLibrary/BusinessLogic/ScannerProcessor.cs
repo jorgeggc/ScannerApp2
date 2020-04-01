@@ -74,6 +74,7 @@ namespace DataLibrary.BusinessLogic
             Insert_sql.Parameters.AddWithValue("@OperatorLogin", 1);
 
             return SqlDataAccess.SaveData(Insert_sql, data);
+
         }
             
         //Method that tests all the conditions that need to pass in order for an ID to be considered valid
@@ -138,6 +139,44 @@ namespace DataLibrary.BusinessLogic
             }
 
         
+        }
+
+        public static int ShowScanner(int IDCardNumber, string DeclineReason, string Name, string Department, DateTime Expiration)
+        {
+            DisplayLogModel data = new DisplayLogModel
+            {
+                IDCardNumber = IDCardNumber, 
+                DeclineReason = DeclineReason,
+                Name = Name,
+                Department = Department,
+                Expiration = Expiration
+            };
+
+            string strConnString = ConfigurationManager.ConnectionStrings["BuildingAccess"].ConnectionString;
+            SqlConnection con = new SqlConnection(strConnString);
+
+            //Select Stored procedure to select the information 
+            //needed to test if an ID is valid or not
+            SqlCommand display_id_info = new SqlCommand("Show_Information", con);
+            display_id_info.CommandType = CommandType.StoredProcedure;
+            //ID entered to test
+            display_id_info.Parameters.AddWithValue("@IDCardNumber", IDCardNumber);
+
+            //The next four parameters passed are outputs that 
+            //will store/return the information we to test 
+            SqlParameter inID = new SqlParameter("@Name", SqlDbType.VarChar) { Direction = ParameterDirection.Output };
+            display_id_info.Parameters.Add(inID);
+            SqlParameter inDeclineReason = new SqlParameter("@declineReason", SqlDbType.VarChar) { Direction = ParameterDirection.Output };
+            display_id_info.Parameters.Add(inDeclineReason);
+            SqlParameter inExpiration = new SqlParameter("@expiration", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
+            display_id_info.Parameters.Add(inExpiration);
+            SqlParameter inDepartment = new SqlParameter("@department", SqlDbType.VarChar) { Direction = ParameterDirection.Output };
+            display_id_info.Parameters.Add(inDepartment);
+
+            con.Open();
+            display_id_info.ExecuteNonQuery();
+
+            return SqlDataAccess.SaveData(display_id_info, data);
         }
         public static List<ScannerLogModel> LoadScannerLog()
         {

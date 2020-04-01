@@ -10,6 +10,7 @@ using static DataLibrary.BusinessLogic.ScannerProcessor;
 
 namespace ScannerApp2.Controllers
 {
+
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -29,6 +30,23 @@ namespace ScannerApp2.Controllers
                     model.AccessDate,
                     model.IDCardNumber,
                     model.DeclineReason);
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        public ActionResult Index(Models.DisplayLogModel model)
+        {
+            ViewBag.Message = "Show Scanned ID's from DB.";
+
+            if (ModelState.IsValid)
+            {
+                int recordCreated = ShowScanner(model.IDCardNumber,
+                    model.DeclineReason,
+                    model.Name,
+                    model.Department,
+                    model.Expiration);
                 return RedirectToAction("Index");
             }
 
