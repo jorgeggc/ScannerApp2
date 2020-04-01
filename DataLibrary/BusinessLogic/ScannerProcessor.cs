@@ -145,7 +145,7 @@ namespace DataLibrary.BusinessLogic
         {
             DisplayLogModel data = new DisplayLogModel
             {
-                IDCardNumber = IDCardNumber, 
+                IDCardNumber = IDCardNumber,
                 DeclineReason = DeclineReason,
                 Name = Name,
                 Department = Department,
