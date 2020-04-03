@@ -44,7 +44,7 @@ namespace DataLibrary.BusinessLogic
             SqlParameter outAccess = new SqlParameter("@ReturnIDAccess", SqlDbType.Bit) { Direction = ParameterDirection.Output };
             select_id_info.Parameters.Add(outAccess);
             SqlParameter outExpiration = new SqlParameter("@ReturnIDExpiration", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
-            select_id_info.Parameters.Add(outExpiration);
+            select_id_info.Parameters.Add(outExpiration);          
             SqlParameter outTermination = new SqlParameter("@ReturnIDTermination", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
             select_id_info.Parameters.Add(outTermination);
 
@@ -55,13 +55,18 @@ namespace DataLibrary.BusinessLogic
             int ID;
             string access;
             DateTime Expiration;
+            //Nullable<DateTime> Termination;
+            //DateTime? Termination = null;
             DateTime Termination;
-
+            //DateTime? dt = (outTermination == DBNull.Value)? (DateTime?)null: Convert.ToDateTime(outTermination);
             ID = (int)outID.Value;
             access = outAccess.Value.ToString();
             Expiration = (DateTime)outExpiration.Value;
             Termination = (DateTime)outTermination.Value;
-            
+
+
+
+
 
             //Insert Stored Procedure 
             SqlCommand Insert_sql = new SqlCommand("Insert_Accesslog", con);
@@ -78,8 +83,9 @@ namespace DataLibrary.BusinessLogic
         }
             
         //Method that tests all the conditions that need to pass in order for an ID to be considered valid
-        public static string Pass(int num, string access, DateTime exp, DateTime term)
+        public static string Pass(int num, string access, DateTime exp, DateTime termination)
         {
+            //string termin = termination;
             //Variable currentDate that holds the current date and time
             DateTime currentDate = DateTime.Now;
 
@@ -87,7 +93,7 @@ namespace DataLibrary.BusinessLogic
             int CheckExpirationDate = DateTime.Compare(exp, currentDate);
 
             //This variable compares the currentDate to the termination date of the ID
-            int CheckTerminationDate = DateTime.Compare(term, currentDate);
+            int terminationDate = DateTime.Compare(termination, currentDate);
 
             //This if statement checks the returned value for @ReturnIDValue
             //If the @ReturnIDValue is equal to 1, it means that the ID exists.
@@ -104,20 +110,15 @@ namespace DataLibrary.BusinessLogic
                     //If the ID is not expired yet then it will continue
                     if(CheckExpirationDate > 0)
                     {
-                        //The fourth if statement will check if the employee is terminated
-                        //If they are it will return "Terminated"
-                        if (CheckTerminationDate < 0)
-                        {
-                            return "Terminated";
+                        if (terminationDate < 0 )
+                        {      
+                            return "Terminated";                          
                         }
-
-                        //if they pass all conditions it will return "Passed All"
                         else
                         {
                             return "Passed All";
                         }
                     }
-
                     //If ID is expired it will return "ID Expired"
                     else{
 
@@ -141,43 +142,7 @@ namespace DataLibrary.BusinessLogic
         
         }
 
-        public static int ShowScanner(int IDCardNumber, string DeclineReason, string Name, string Department, DateTime Expiration)
-        {
-            DisplayLogModel data = new DisplayLogModel
-            {
-                IDCardNumber = IDCardNumber,
-                DeclineReason = DeclineReason,
-                Name = Name,
-                Department = Department,
-                Expiration = Expiration
-            };
-
-            string strConnString = ConfigurationManager.ConnectionStrings["BuildingAccess"].ConnectionString;
-            SqlConnection con = new SqlConnection(strConnString);
-
-            //Select Stored procedure to select the information 
-            //needed to test if an ID is valid or not
-            SqlCommand display_id_info = new SqlCommand("Show_Information", con);
-            display_id_info.CommandType = CommandType.StoredProcedure;
-            //ID entered to test
-            display_id_info.Parameters.AddWithValue("@IDCardNumber", IDCardNumber);
-
-            //The next four parameters passed are outputs that 
-            //will store/return the information we to test 
-            SqlParameter inID = new SqlParameter("@Name", SqlDbType.VarChar) { Direction = ParameterDirection.Output };
-            display_id_info.Parameters.Add(inID);
-            SqlParameter inDeclineReason = new SqlParameter("@declineReason", SqlDbType.VarChar) { Direction = ParameterDirection.Output };
-            display_id_info.Parameters.Add(inDeclineReason);
-            SqlParameter inExpiration = new SqlParameter("@expiration", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
-            display_id_info.Parameters.Add(inExpiration);
-            SqlParameter inDepartment = new SqlParameter("@department", SqlDbType.VarChar) { Direction = ParameterDirection.Output };
-            display_id_info.Parameters.Add(inDepartment);
-
-            con.Open();
-            display_id_info.ExecuteNonQuery();
-
-            return SqlDataAccess.SaveData(display_id_info, data);
-        }
+       
         public static List<ScannerLogModel> LoadScannerLog()
         {
             string sql = @"select AccessLogID, AccessLocationID, StationID, AccessDate, IDCardNumber, 

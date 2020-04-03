@@ -1,8 +1,24 @@
 ﻿@model ScannerApp2.Models.ScannerLogModel
 @{
     ViewBag.Title = "Home Page";
-}
 
+}
+    <script runat="server">
+         protected void Page_Load(object sender, EventArgs e)
+        {
+             TextBox1.Text = model.IDCardNumber;
+
+         }
+    </script>
+
+    <head runat="server">
+        <title>Index</title>
+        <style type="text/css">
+            #form1 {
+                font-weight: 700;
+            }
+        </style>
+    </head>
 <div class="text-center">
     <h1 class="display-4">Kane County Scanner</h1>
     <div class="container">
@@ -10,8 +26,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4">
+                        for()
                         <img src="~/Content/Images/99991.jpg" class="img-thumbnail" alt="Scanned img 1" style="padding:16px;width:40%;border-color:red;border-width:5px">
-                        <input class="form-control" id="TextBox1" name="TextBox1" type="text"/>
+                        <input class="form-control" id="TextBox1" name="TextBox1" type="text" />
+                        
                     </div>
 
                     <div class="col-lg-4">

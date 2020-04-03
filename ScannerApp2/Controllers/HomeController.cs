@@ -35,23 +35,6 @@ namespace ScannerApp2.Controllers
 
             return View();
         }
-
-        public ActionResult Index(Models.DisplayLogModel model)
-        {
-            ViewBag.Message = "Show Scanned ID's from DB.";
-
-            if (ModelState.IsValid)
-            {
-                int recordCreated = ShowScanner(model.IDCardNumber,
-                    model.DeclineReason,
-                    model.Name,
-                    model.Department,
-                    model.Expiration);
-                return RedirectToAction("Index");
-            }
-
-            return View();
-        }
         public ActionResult ScannerLog()
         {
             ViewBag.Message = "View a list of Scanned Logs.";
