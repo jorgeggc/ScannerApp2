@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\ScannerProcessor.cs" />
     <Compile Include="DataAccess\SqlDataAccess.cs" />
-    <Compile Include="Models\DisplayLogModel.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\ScannerLogModel.cs" />

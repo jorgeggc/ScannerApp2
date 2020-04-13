@@ -141,24 +141,28 @@ namespace DataLibrary.BusinessLogic
 
         
         }
+        public static List<ScannerLogModel> LoadLastThreeAccessLog()
+        {
+            string sql = @"dbo.LastThree_AccessLog;";
 
-       
+            return SqlDataAccess.LoadData<ScannerLogModel>(sql);
+        }
+
         public static List<ScannerLogModel> LoadScannerLog()
         {
-            string sql = @"select AccessLogID, AccessLocationID, StationID, AccessDate, IDCardNumber, 
-                            DeclineReason from dbo.AccessLogs;";
+            string sql = @"dbo.Load_ScannerLog;";
 
             return SqlDataAccess.LoadData<ScannerLogModel>(sql);
         }
         public static List<EmployeeModel> LoadEmployees()
         {
-            string sql = @"select IdentificationCardID, Name, CourtAccessRequired, IDCardNumber from dbo.IdentificationCards;";
+            string sql = @"dbo.Load_Employees;";
 
             return SqlDataAccess.LoadData<EmployeeModel>(sql);
         }
         public static List<LocationModel> LoadLocation()
         {
-            string sql = @"select AccessLocationID, LocationDesc from dbo.AccessLocations;";
+            string sql = @"dbo.Load_Location;";
 
             return SqlDataAccess.LoadData<LocationModel>(sql);
         }
