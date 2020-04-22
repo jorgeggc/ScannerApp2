@@ -96,5 +96,6 @@ namespace ScannerApp2.Controllers
             }
             return View(employees);
         }
+        //public enum ScannerLocations { Kane County Court House, Elgin Branch Court, Kane County Judicial Center, Aurora Brance Court, Kane County Branch Court, ITD };
     }
 }

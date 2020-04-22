@@ -19,50 +19,99 @@
             }
         </style>
     </head>
-<div class="text-center">
-    <h1 class="display-4">Kane County Scanner</h1>
-    <div class="container">
-        <form>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4">
-                        for()
-                        <img src="~/Images/99991.jpg" class="img-thumbnail" alt="Scanned img 1" style="padding:16px;width:40%;border-color:red;border-width:5px">
-                        <input class="form-control" id="TextBox1" name="TextBox1" type="text" />
-                        
+    <div class="text-center">
+        <h1 class="display-4">Kane County Scanner</h1>
+        <!--<asp:dropdownlist runat="server" id="ddlTest">
+        <asp:listitem text="Kane County Court House" value="1"></asp:listitem>
+        <asp:listitem text="Elgin Branch Court" value="2"></asp:listitem>
+        <asp:listitem text="Kane County Judicial Center" value="3"></asp:listitem>
+        <asp:listitem text="Aurora Brance Court" value="4"></asp:listitem>
+        <asp:listitem text="Kane County Branch Court" value="5"></asp:listitem>
+        <asp:listitem text="ITD" value="6"></asp:listitem>
+    </asp:dropdownlist>-->
+
+        
+
+        <div class="container">
+            <form>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            
+                            for()
+                            <img src="~/Images/99991.jpg" class="img-thumbnail" alt="Scanned img 1" style="padding:16px;width:40%;border-color:red;border-width:5px">
+                            <input class="form-control" id="TextBox1" name="TextBox1" type="text" />
+
+                        </div>
+
+                        <div class="col-lg-4">
+                            <img src="~/Content/Images/99992.jpg" class="img-thumbnail" alt="Scanned img 2" style="padding:16px;width:40%;border-color:green;border-width:5px">
+                            <p>2 Data reader goes here.</p>
+                        </div>
+
+                        <div class="col-lg-4">
+
+                            <img src="~/Content/Images/99994.jpg" class="img-thumbnail" alt="Scanned img 3" style="padding:16px;width:40%;border-color:red;border-width:5px">
+                            <p>3 Data reader goes here.</p>
+
+                        </div>
+
                     </div>
-
-                    <div class="col-lg-4">
-                        <img src="~/Content/Images/99992.jpg" class="img-thumbnail" alt="Scanned img 2" style="padding:16px;width:40%;border-color:green;border-width:5px">
-                        <p>2 Data reader goes here.</p>
-                    </div> 
-
-                    <div class="col-lg-4">
-
-                        <img src="~/Content/Images/99994.jpg" class="img-thumbnail" alt="Scanned img 3" style="padding:16px;width:40%;border-color:red;border-width:5px">
-                        <p>3 Data reader goes here.</p>
-
-                    </div>
-
                 </div>
-                @*<input type="text" class="form-control" id="IDCardNumber" style="width:76px;align-content:center;margin:auto" autofocus>
-                <button type="submit" class="btn btn-default" style="margin:auto">Submit</button>*@
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+    <div class="list-group-horizontal col-md-4">
+        <hr />
+        @{
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "Kane County Court House",
+                Value = "1"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Elgin Branch Court",
+                Value = "2",
+                Selected = true
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Kane County Judicial Center",
+                Value = "3"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Aurora Brance Court",
+                Value = "4"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Kane County Branch Court",
+                Value = "5"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "ITD",
+                Value = "6"
+            });
+        }
+        @Html.DropDownListFor(model => model.AccessLocationID, listItems, "-- Select Location --")
+    </div>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    <div class="form-horizontal col-md-4">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.IDCardNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IDCardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.IDCardNumber, new { htmlAttributes = new { autofocus = "" } })
                 @Html.ValidationMessageFor(model => model.IDCardNumber, "", new { @class = "text-danger" })
             </div>
         </div>
