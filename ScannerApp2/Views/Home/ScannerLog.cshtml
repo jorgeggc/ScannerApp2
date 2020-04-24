@@ -32,26 +32,31 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccessLogID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccessLocationID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StationID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccessDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDCardNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeclineReason)
-            </td>
-        </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.AccessLogID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AccessLocationID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StationID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AccessDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.IDCardNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DeclineReason)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+    </td>
+</tr>
     }
 
 </table>

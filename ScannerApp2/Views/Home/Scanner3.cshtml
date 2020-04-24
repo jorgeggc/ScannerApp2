@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ScannerApp2.Models.ScannerLogModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Scanner3</title>
+</head>
+<body>
+    @foreach (var item in Model)
+    {
+        <table class="table">
+
+            <tr>
+                <th>
+
+                    @Html.DisplayNameFor(model => model.AccessLogID)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccessLogID)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccessLocationID)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccessLocationID)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StationID)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StationID)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccessDate)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccessDate)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IDCardNumber)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDCardNumber)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeclineReason)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeclineReason)
+                </td>
+            </tr>
+
+        </table>
+    }
+
+</body>
+</html>

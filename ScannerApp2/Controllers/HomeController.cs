@@ -57,8 +57,60 @@ namespace ScannerApp2.Controllers
 
             return View(accessLog);
         }
-        
-        
+        public ActionResult Scanner1()
+        {
+            ViewBag.Message = "View a list of Scanned Logs.";
+
+            var data = LoadLastThreeAccessLog()[2];
+            List<Models.ScannerLogModel> accessLog = new List<Models.ScannerLogModel>();
+
+            accessLog.Add(new Models.ScannerLogModel
+            {
+                AccessLogID = data.AccessLogID,
+                AccessLocationID = data.AccessLocationID,
+                StationID = data.StationID,
+                AccessDate = data.AccessDate,
+                IDCardNumber = data.IDCardNumber,
+                DeclineReason = data.DeclineReason
+            });
+            return View(accessLog);
+        }
+        public ActionResult Scanner2()
+        {
+            ViewBag.Message = "View a list of Scanned Logs.";
+
+            var data = LoadLastThreeAccessLog()[1];
+            List<Models.ScannerLogModel> accessLog = new List<Models.ScannerLogModel>();
+
+            accessLog.Add(new Models.ScannerLogModel
+            {
+                AccessLogID = data.AccessLogID,
+                AccessLocationID = data.AccessLocationID,
+                StationID = data.StationID,
+                AccessDate = data.AccessDate,
+                IDCardNumber = data.IDCardNumber,
+                DeclineReason = data.DeclineReason
+            });
+            return View(accessLog);
+        }
+        public ActionResult Scanner3()
+        {
+            ViewBag.Message = "View a list of Scanned Logs.";
+
+            var data = LoadLastThreeAccessLog()[0];
+            List<Models.ScannerLogModel> accessLog = new List<Models.ScannerLogModel>();
+            
+                accessLog.Add(new Models.ScannerLogModel
+                {
+                    AccessLogID = data.AccessLogID,
+                    AccessLocationID = data.AccessLocationID,
+                    StationID = data.StationID,
+                    AccessDate = data.AccessDate,
+                    IDCardNumber = data.IDCardNumber,
+                    DeclineReason = data.DeclineReason
+                });
+            return View(accessLog);
+        }
         public ActionResult LocationSelection()
         {
             ViewBag.Message = "A selection of your current location.";
