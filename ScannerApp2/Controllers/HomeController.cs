@@ -10,9 +10,11 @@ using static DataLibrary.BusinessLogic.ScannerProcessor;
 
 namespace ScannerApp2.Controllers
 {
-
     public class HomeController : Controller
     {
+        //Window Autheniticaten 
+        //For window users
+        [Authorize(Users = @"")]
         public ActionResult Index()
         {
             return View();
