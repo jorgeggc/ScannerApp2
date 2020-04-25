@@ -13,7 +13,7 @@ namespace DataLibrary.BusinessLogic
 {
     public static class ScannerProcessor
     {
-        public static int CreateScannerLog(int accessLocationID, string stationID,
+        public static int CreateScannerLog(int accessLocationID, string stationID, string name,
            DateTime accessDate, int iDCardNumber, string declineReason)
         {
             ScannerLogModel data = new ScannerLogModel
@@ -21,6 +21,7 @@ namespace DataLibrary.BusinessLogic
 
                 AccessLocationID = accessLocationID,
                 StationID = stationID,
+                Name = name,
                 AccessDate = accessDate,
                 IDCardNumber = iDCardNumber,
                 DeclineReason = declineReason
@@ -41,6 +42,8 @@ namespace DataLibrary.BusinessLogic
             //will store/return the information we to test 
             SqlParameter outID = new SqlParameter("@ReturnIDValue", SqlDbType.Int) { Direction = ParameterDirection.Output };
             select_id_info.Parameters.Add(outID);
+            SqlParameter outName = new SqlParameter("@Name", SqlDbType.VarChar,10) { Direction = ParameterDirection.Output };
+            select_id_info.Parameters.Add(outName);
             SqlParameter outAccess = new SqlParameter("@ReturnIDAccess", SqlDbType.Bit) { Direction = ParameterDirection.Output };
             select_id_info.Parameters.Add(outAccess);
             SqlParameter outExpiration = new SqlParameter("@ReturnIDExpiration", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
@@ -54,12 +57,14 @@ namespace DataLibrary.BusinessLogic
             //These four variables will read the values from from the Select_Information stored procedure 
             int ID;
             string access;
+            string Name;
             DateTime Expiration;
             //Nullable<DateTime> Termination;
             //DateTime? Termination = null;
             DateTime Termination;
             //DateTime? dt = (outTermination == DBNull.Value)? (DateTime?)null: Convert.ToDateTime(outTermination);
             ID = (int)outID.Value;
+            //Name = outName.Value.ToString();
             access = outAccess.Value.ToString();
             Expiration = (DateTime)outExpiration.Value;
             Termination = (DateTime)outTermination.Value;
@@ -74,6 +79,7 @@ namespace DataLibrary.BusinessLogic
             //Parameters passed to the stored procedure to insert
             Insert_sql.Parameters.AddWithValue("@AccessLocationID", 1);
             Insert_sql.Parameters.AddWithValue("@StationID", "CSC");
+            Insert_sql.Parameters.AddWithValue("@Name", name);
             Insert_sql.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
             Insert_sql.Parameters.AddWithValue("@DeclineReason", Pass(ID, access, Expiration, Termination));
             Insert_sql.Parameters.AddWithValue("@OperatorLogin", 1);

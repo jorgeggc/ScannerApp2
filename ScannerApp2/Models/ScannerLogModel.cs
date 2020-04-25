@@ -13,7 +13,7 @@ namespace ScannerApp2.Models
         public DateTime AccessDate { get; set; }
         public int IDCardNumber { get; set; }
         public string DeclineReason { get; set; }
-        //public string Name { get; set; }
+        public string Name { get; set; }
         //public string Department { get; set; }
         //public DateTime Expiration { get; set; }
 

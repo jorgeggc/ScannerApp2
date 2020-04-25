@@ -27,7 +27,8 @@ namespace ScannerApp2.Controllers
             {
                 int recordCreated = CreateScannerLog(model.AccessLocationID,
                     model.StationID,
-                    model.AccessDate,
+                    model.Name,
+                    model.AccessDate,                    
                     model.IDCardNumber,
                     model.DeclineReason);
                 return RedirectToAction("Index");
