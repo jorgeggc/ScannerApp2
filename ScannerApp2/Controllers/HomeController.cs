@@ -10,9 +10,11 @@ using static DataLibrary.BusinessLogic.ScannerProcessor;
 
 namespace ScannerApp2.Controllers
 {
-
     public class HomeController : Controller
-    {   
+    {
+        //Window Autheniticaten 
+        //For window users
+        [Authorize(Users = @"")]
         public ActionResult Index()
         {
             return View();
@@ -27,8 +29,7 @@ namespace ScannerApp2.Controllers
             {
                 int recordCreated = CreateScannerLog(model.AccessLocationID,
                     model.StationID,
-                    model.Name,
-                    model.AccessDate,                    
+                    model.AccessDate,
                     model.IDCardNumber,
                     model.DeclineReason);
                 return RedirectToAction("Index");
