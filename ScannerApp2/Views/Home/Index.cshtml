@@ -9,27 +9,39 @@
         <form>
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-4">                       
-                        <img src="~/Images/99991.jpg" class="img-thumbnail" alt="Scanned img 1" style="padding:16px;width:40%;border-color:red;border-width:5px">
-                        <iframe src="~/Home/Scanner1" height="172" width="300"></iframe>
-                        
+                    <div class="col-lg-4">
+                        <iframe src="~/Home/Scanner1" height="430" width="300"></iframe>
                     </div>
 
                     <div class="col-lg-4">
-                        <img src="~/Content/Images/99992.jpg" class="img-thumbnail" alt="Scanned img 2" style="padding:16px;width:40%;border-color:green;border-width:5px">
-                        <iframe src="~/Home/Scanner2" height="172" width="300"></iframe>
+                        <iframe src="~/Home/Scanner2" height="430" width="300"></iframe>
                     </div>
                     <div class="col-lg-4">
-                        <img src="~/Content/Images/19010010.jpg" class="img-thumbnail" alt="Scanned img 3" style="padding:16px;width:40%;border-color:red;border-width:5px">
-                        <iframe src="~/Home/Scanner3" height="172" width="300"></iframe>
-
+                        <iframe src="~/Home/Scanner3" height="430" width="300"></iframe>
                     </div>
                 </div>                
             </div>
         </form>
     </div>
-    <div class="list-group-horizontal col-md-4">
-        <hr />
+ 
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal col-md-4">
+    <br />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div class="form-group">
+    @Html.LabelFor(model => model.IDCardNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.IDCardNumber, new { htmlAttributes = new { autofocus = "" } })
+        @Html.ValidationMessageFor(model => model.IDCardNumber, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="control-label col-md-2">
+        <br />
         @{
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
@@ -66,27 +78,15 @@
         }
         @Html.DropDownListFor(model => model.AccessLocationID, listItems, "-- Select Location --")
     </div>
+
+
+
 </div>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal col-md-4">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IDCardNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IDCardNumber, new { htmlAttributes = new { autofocus = "" } })
-                @Html.ValidationMessageFor(model => model.IDCardNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-5 col-md-10">
-                <input type="submit" value="Submit" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-5 col-md-10">
+            <input type="submit" value="Submit" class="btn btn-default" />
         </div>
     </div>
+</div>
 }

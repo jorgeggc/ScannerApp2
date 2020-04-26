@@ -280,6 +280,7 @@
     <Content Include="Views\Home\Scanner3.cshtml" />
     <Content Include="Views\Home\Scanner2.cshtml" />
     <Content Include="Views\Home\Scanner1.cshtml" />
+    <Content Include="Views\Shared\ScannerLayoutPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -192,8 +192,12 @@ figure {
 }
 
 img {
-  vertical-align: middle;
-  border-style: none;
+    vertical-align: middle;
+    border-style: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 svg {
@@ -1689,13 +1693,13 @@ pre code {
 
 .table {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   color: #212529;
 }
 
 .table th,
 .table td {
-  padding: 0.75rem;
+  padding: 0.1rem;
   vertical-align: top;
   border-top: 1px solid #dee2e6;
 }

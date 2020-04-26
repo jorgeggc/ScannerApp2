@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ScannerApp2.Models.ScannerLogModel>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/ScannerLayoutPage.cshtml";
 }
 
 <!DOCTYPE html>
@@ -14,6 +14,7 @@
 <body>
     @foreach (var item in Model)
     {
+        <img src="~/Images/@(Html.DisplayFor(modelItem => item.IDCardNumber) + ".jpg")" class="img-thumbnail" alt="Scanned img 1" style="width:90%;border-color:red;border-width:5px">
         <table class="table">
 
             <tr>

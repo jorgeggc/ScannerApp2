@@ -8,7 +8,7 @@ namespace ScannerApp2.Controllers
     {
         //Window Autheniticaten 
         //For window users
-        [Authorize(Users = @"AUSB1\AUSBU2")]
+        [Authorize(Users = @"AUSB1\AUSBU1")]
         public ActionResult Index()
         {
             return View();
