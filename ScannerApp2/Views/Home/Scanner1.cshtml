@@ -5,7 +5,7 @@ Layout = "~/Views/Shared/ScannerLayoutPage.cshtml";
 }
 
 <!DOCTYPE html>
-
+@{  var pass = "";}
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -14,8 +14,21 @@ Layout = "~/Views/Shared/ScannerLayoutPage.cshtml";
 <body>
     @foreach (var item in Model)
     {
-        //if item.DeclineReason
-        <img src="~/Images/@(Html.DisplayFor(modelItem => item.IDCardNumber) + ".jpg")" class="img-thumbnail" alt="Scanned img 1" style="width:90%;border-color:red;border-width:5px;">
+        pass = Html.DisplayFor(modelItem => item.DeclineReason).ToString();
+
+
+
+
+        if (@pass == "Passed All")
+        {
+            pass = "green";
+        }
+        else
+        {
+            pass = "red";
+        }
+
+        <img src="~/Images/@(Html.DisplayFor(modelItem => item.IDCardNumber) + ".jpg")" class="img-thumbnail" alt="Scanned img 1" style="width:90%;border-color:@(pass.ToString());border-width:5px;">
         <table class="table">
 
             <tr>
