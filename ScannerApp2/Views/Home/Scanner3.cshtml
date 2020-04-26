@@ -17,12 +17,13 @@
         <table class="table">
 
             <tr>
-                <th>
 
-                    @Html.DisplayNameFor(model => model.AccessLogID)
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AccessLogID)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
             </tr>
             <tr>
@@ -31,22 +32,6 @@
                 </th>
                 <td>
                     @Html.DisplayFor(modelItem => item.AccessLocationID)
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.StationID)
-                </th>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StationID)
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.AccessDate)
-                </th>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccessDate)
                 </td>
             </tr>
             <tr>

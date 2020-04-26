@@ -14,38 +14,44 @@
 <body>
     @foreach (var item in Model)
     {
-        <table class="table">
+    <table class="table">
 
-            <tr>
-           
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.AccessLocationID)
-                </th>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccessLocationID)
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.StationID)
-                </th>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StationID)
-                </td>
-            </tr>
-                     
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.DeclineReason)
-                </th>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeclineReason)
-                </td>
-            </tr>
+        <tr>
 
-        </table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AccessLocationID)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessLocationID)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IDCardNumber)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDCardNumber)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DeclineReason)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeclineReason)
+            </td>
+        </tr>
+
+    </table>
     }
-
 </body>
 </html>

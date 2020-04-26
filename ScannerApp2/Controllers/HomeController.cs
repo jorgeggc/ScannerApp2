@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using ScannerApp2.Models;
-using DataLibrary;
-using DataLibrary.Models;
 using static DataLibrary.BusinessLogic.ScannerProcessor;
 
 namespace ScannerApp2.Controllers
@@ -14,12 +8,12 @@ namespace ScannerApp2.Controllers
     {
         //Window Autheniticaten 
         //For window users
-        [Authorize(Users = @"")]
+        [Authorize(Users = @"AUSB1\AUSBU2")]
         public ActionResult Index()
         {
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult Index(Models.ScannerLogModel model)
         {
@@ -29,6 +23,7 @@ namespace ScannerApp2.Controllers
             {
                 int recordCreated = CreateScannerLog(model.AccessLocationID,
                     model.StationID,
+                    model.Name,
                     model.AccessDate,
                     model.IDCardNumber,
                     model.DeclineReason);
@@ -71,6 +66,7 @@ namespace ScannerApp2.Controllers
                 AccessLogID = data.AccessLogID,
                 AccessLocationID = data.AccessLocationID,
                 StationID = data.StationID,
+                Name = data.Name,
                 AccessDate = data.AccessDate,
                 IDCardNumber = data.IDCardNumber,
                 DeclineReason = data.DeclineReason
@@ -89,6 +85,7 @@ namespace ScannerApp2.Controllers
                 AccessLogID = data.AccessLogID,
                 AccessLocationID = data.AccessLocationID,
                 StationID = data.StationID,
+                Name = data.Name,
                 AccessDate = data.AccessDate,
                 IDCardNumber = data.IDCardNumber,
                 DeclineReason = data.DeclineReason
@@ -101,16 +98,17 @@ namespace ScannerApp2.Controllers
 
             var data = LoadLastThreeAccessLog()[0];
             List<Models.ScannerLogModel> accessLog = new List<Models.ScannerLogModel>();
-            
-                accessLog.Add(new Models.ScannerLogModel
-                {
-                    AccessLogID = data.AccessLogID,
-                    AccessLocationID = data.AccessLocationID,
-                    StationID = data.StationID,
-                    AccessDate = data.AccessDate,
-                    IDCardNumber = data.IDCardNumber,
-                    DeclineReason = data.DeclineReason
-                });
+
+            accessLog.Add(new Models.ScannerLogModel
+            {
+                AccessLogID = data.AccessLogID,
+                AccessLocationID = data.AccessLocationID,
+                StationID = data.StationID,
+                Name = data.Name,
+                AccessDate = data.AccessDate,
+                IDCardNumber = data.IDCardNumber,
+                DeclineReason = data.DeclineReason
+            });
             return View(accessLog);
         }
         public ActionResult LocationSelection()
@@ -130,7 +128,7 @@ namespace ScannerApp2.Controllers
             }
 
             return View(location);
-        }     
+        }
         public ActionResult EmployeeList()
         {
             ViewBag.Message = "View a list of Employee's.";

@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLibrary.BusinessLogic
 {
@@ -42,18 +39,18 @@ namespace DataLibrary.BusinessLogic
             //will store/return the information we to test 
             SqlParameter outID = new SqlParameter("@ReturnIDValue", SqlDbType.Int) { Direction = ParameterDirection.Output };
             select_id_info.Parameters.Add(outID);
-            SqlParameter outName = new SqlParameter("@Name", SqlDbType.VarChar,10) { Direction = ParameterDirection.Output };
+            SqlParameter outName = new SqlParameter("@Name", SqlDbType.VarChar, 25) { Direction = ParameterDirection.Output };
             select_id_info.Parameters.Add(outName);
             SqlParameter outAccess = new SqlParameter("@ReturnIDAccess", SqlDbType.Bit) { Direction = ParameterDirection.Output };
             select_id_info.Parameters.Add(outAccess);
             SqlParameter outExpiration = new SqlParameter("@ReturnIDExpiration", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
-            select_id_info.Parameters.Add(outExpiration);          
+            select_id_info.Parameters.Add(outExpiration);
             SqlParameter outTermination = new SqlParameter("@ReturnIDTermination", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
             select_id_info.Parameters.Add(outTermination);
 
             con.Open();
             select_id_info.ExecuteNonQuery();
-            
+
             //These four variables will read the values from from the Select_Information stored procedure 
             int ID;
             string access;
@@ -64,7 +61,7 @@ namespace DataLibrary.BusinessLogic
             DateTime Termination;
             //DateTime? dt = (outTermination == DBNull.Value)? (DateTime?)null: Convert.ToDateTime(outTermination);
             ID = (int)outID.Value;
-            //Name = outName.Value.ToString();
+            Name = outName.Value.ToString();
             access = outAccess.Value.ToString();
             Expiration = (DateTime)outExpiration.Value;
             Termination = (DateTime)outTermination.Value;
@@ -79,7 +76,7 @@ namespace DataLibrary.BusinessLogic
             //Parameters passed to the stored procedure to insert
             Insert_sql.Parameters.AddWithValue("@AccessLocationID", 1);
             Insert_sql.Parameters.AddWithValue("@StationID", "CSC");
-            Insert_sql.Parameters.AddWithValue("@Name", name);
+            Insert_sql.Parameters.AddWithValue("@Name", Name);
             Insert_sql.Parameters.AddWithValue("@IDCardNumber", iDCardNumber);
             Insert_sql.Parameters.AddWithValue("@DeclineReason", Pass(ID, access, Expiration, Termination));
             Insert_sql.Parameters.AddWithValue("@OperatorLogin", 1);
@@ -87,7 +84,7 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.SaveData(Insert_sql, data);
 
         }
-            
+
         //Method that tests all the conditions that need to pass in order for an ID to be considered valid
         public static string Pass(int num, string access, DateTime exp, DateTime termination)
         {
@@ -114,11 +111,11 @@ namespace DataLibrary.BusinessLogic
 
                     //This is the third if statement and will check the expiration date
                     //If the ID is not expired yet then it will continue
-                    if(CheckExpirationDate > 0)
+                    if (CheckExpirationDate > 0)
                     {
-                        if (terminationDate < 0 )
-                        {      
-                            return "Terminated";                          
+                        if (terminationDate < 0)
+                        {
+                            return "Terminated";
                         }
                         else
                         {
@@ -126,26 +123,29 @@ namespace DataLibrary.BusinessLogic
                         }
                     }
                     //If ID is expired it will return "ID Expired"
-                    else{
+                    else
+                    {
 
                         return "ID Expired";
-                        
+
                     }
                 }
 
                 //If the ID does not have access, then it will return "Access Denied"
-                else{
+                else
+                {
                     return "Access Denied";
                 }
             }
 
             //This is the first if statement and it will return "ID DNE" 
             //if the ID does not exists in the database
-            else{
+            else
+            {
                 return "ID DNE";
             }
 
-        
+
         }
         public static List<ScannerLogModel> LoadLastThreeAccessLog()
         {
